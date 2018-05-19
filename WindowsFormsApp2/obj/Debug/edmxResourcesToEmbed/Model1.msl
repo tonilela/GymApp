@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TeretanaModelStoreContainer" CdmEntityContainer="TeretanaEntities">
+    <EntitySetMapping Name="Clanarine">
+      <EntityTypeMapping TypeName="TeretanaModel.Clanarine">
+        <MappingFragment StoreEntitySet="Clanarine">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Ime_clanarine" ColumnName="Ime_clanarine" />
+          <ScalarProperty Name="Cjena" ColumnName="Cjena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Korisnici">
+      <EntityTypeMapping TypeName="TeretanaModel.Korisnici">
+        <MappingFragment StoreEntitySet="Korisnici">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Ime_Prezime" ColumnName="Ime_Prezime" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Mobitel" ColumnName="Mobitel" />
+          <ScalarProperty Name="Datum_upisa" ColumnName="Datum_upisa" />
+          <ScalarProperty Name="Id_clanarine" ColumnName="Id_clanarine" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proizvodi">
+      <EntityTypeMapping TypeName="TeretanaModel.Proizvodi">
+        <MappingFragment StoreEntitySet="Proizvodi">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Ime_Proizvoda" ColumnName="Ime_Proizvoda" />
+          <ScalarProperty Name="Opis" ColumnName="Opis" />
+          <ScalarProperty Name="Cjena" ColumnName="Cjena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Racun_Korisnik">
+      <EntityTypeMapping TypeName="TeretanaModel.Racun_Korisnik">
+        <MappingFragment StoreEntitySet="Racun_Korisnik">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_Korisnika" ColumnName="Id_Korisnika" />
+          <ScalarProperty Name="Datum_izdavanja" ColumnName="Datum_izdavanja" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Racun_Proizvodi">
+      <EntityTypeMapping TypeName="TeretanaModel.Racun_Proizvodi">
+        <MappingFragment StoreEntitySet="Racun_Proizvodi">
+          <ScalarProperty Name="Id_racuna" ColumnName="Id_racuna" />
+          <ScalarProperty Name="Id_proizvoda" ColumnName="Id_proizvoda" />
+          <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Racuni">
+      <EntityTypeMapping TypeName="TeretanaModel.Racuni">
+        <MappingFragment StoreEntitySet="Racuni">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Datum_izdavanja" ColumnName="Datum_izdavanja" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TeretanaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clanarine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ime_clanarine" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cjena" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Korisnici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ime_Prezime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adresa" Type="varchar" MaxLength="100" />
+          <Property Name="Mobitel" Type="varchar" MaxLength="25" />
+          <Property Name="Datum_upisa" Type="date" Nullable="false" />
+          <Property Name="Id_clanarine" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proizvodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ime_Proizvoda" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Opis" Type="varchar(max)" />
+          <Property Name="Cjena" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Racun_Korisnik">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Korisnika" Type="int" Nullable="false" />
+          <Property Name="Datum_izdavanja" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Racun_Proizvodi">
+          <Key>
+            <PropertyRef Name="Id_racuna" />
+            <PropertyRef Name="Id_proizvoda" />
+          </Key>
+          <Property Name="Id_racuna" Type="int" Nullable="false" />
+          <Property Name="Id_proizvoda" Type="int" Nullable="false" />
+          <Property Name="Kolicina" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Racuni">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Datum_izdavanja" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Korisnici_Clanarine">
+          <End Role="Clanarine" Type="Self.Clanarine" Multiplicity="1" />
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clanarine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Korisnici">
+              <PropertyRef Name="Id_clanarine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racun_Korisnik_Korisnici">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Racun_Korisnik" Type="Self.Racun_Korisnik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racun_Korisnik">
+              <PropertyRef Name="Id_Korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racun_Proizvodi_Proizvodi">
+          <End Role="Proizvodi" Type="Self.Proizvodi" Multiplicity="1" />
+          <End Role="Racun_Proizvodi" Type="Self.Racun_Proizvodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proizvodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racun_Proizvodi">
+              <PropertyRef Name="Id_proizvoda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racun_Proizvodi_Racuni">
+          <End Role="Racuni" Type="Self.Racuni" Multiplicity="1" />
+          <End Role="Racun_Proizvodi" Type="Self.Racun_Proizvodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Racuni">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racun_Proizvodi">
+              <PropertyRef Name="Id_racuna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeretanaModelStoreContainer">
+          <EntitySet Name="Clanarine" EntityType="Self.Clanarine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korisnici" EntityType="Self.Korisnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proizvodi" EntityType="Self.Proizvodi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Racun_Korisnik" EntityType="Self.Racun_Korisnik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Racun_Proizvodi" EntityType="Self.Racun_Proizvodi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Racuni" EntityType="Self.Racuni" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Korisnici_Clanarine" Association="Self.FK_Korisnici_Clanarine">
+            <End Role="Clanarine" EntitySet="Clanarine" />
+            <End Role="Korisnici" EntitySet="Korisnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Korisnik_Korisnici" Association="Self.FK_Racun_Korisnik_Korisnici">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Racun_Korisnik" EntitySet="Racun_Korisnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Proizvodi_Proizvodi" Association="Self.FK_Racun_Proizvodi_Proizvodi">
+            <End Role="Proizvodi" EntitySet="Proizvodi" />
+            <End Role="Racun_Proizvodi" EntitySet="Racun_Proizvodi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Proizvodi_Racuni" Association="Self.FK_Racun_Proizvodi_Racuni">
+            <End Role="Racuni" EntitySet="Racuni" />
+            <End Role="Racun_Proizvodi" EntitySet="Racun_Proizvodi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeretanaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clanarine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ime_clanarine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cjena" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.FK_Korisnici_Clanarine" FromRole="Clanarine" ToRole="Korisnici" />
+        </EntityType>
+        <EntityType Name="Korisnici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ime_Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mobitel" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Datum_upisa" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Id_clanarine" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clanarine" Relationship="Self.FK_Korisnici_Clanarine" FromRole="Korisnici" ToRole="Clanarine" />
+          <NavigationProperty Name="Racun_Korisnik" Relationship="Self.FK_Racun_Korisnik_Korisnici" FromRole="Korisnici" ToRole="Racun_Korisnik" />
+        </EntityType>
+        <EntityType Name="Proizvodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ime_Proizvoda" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Cjena" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Racun_Proizvodi" Relationship="Self.FK_Racun_Proizvodi_Proizvodi" FromRole="Proizvodi" ToRole="Racun_Proizvodi" />
+        </EntityType>
+        <EntityType Name="Racun_Korisnik">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Korisnika" Type="Int32" Nullable="false" />
+          <Property Name="Datum_izdavanja" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Korisnici" Relationship="Self.FK_Racun_Korisnik_Korisnici" FromRole="Racun_Korisnik" ToRole="Korisnici" />
+        </EntityType>
+        <EntityType Name="Racun_Proizvodi">
+          <Key>
+            <PropertyRef Name="Id_racuna" />
+            <PropertyRef Name="Id_proizvoda" />
+          </Key>
+          <Property Name="Id_racuna" Type="Int32" Nullable="false" />
+          <Property Name="Id_proizvoda" Type="Int32" Nullable="false" />
+          <Property Name="Kolicina" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Proizvodi" Relationship="Self.FK_Racun_Proizvodi_Proizvodi" FromRole="Racun_Proizvodi" ToRole="Proizvodi" />
+          <NavigationProperty Name="Racuni" Relationship="Self.FK_Racun_Proizvodi_Racuni" FromRole="Racun_Proizvodi" ToRole="Racuni" />
+        </EntityType>
+        <EntityType Name="Racuni">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Datum_izdavanja" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Racun_Proizvodi" Relationship="Self.FK_Racun_Proizvodi_Racuni" FromRole="Racuni" ToRole="Racun_Proizvodi" />
+        </EntityType>
+        <Association Name="FK_Korisnici_Clanarine">
+          <End Role="Clanarine" Type="Self.Clanarine" Multiplicity="1" />
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clanarine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Korisnici">
+              <PropertyRef Name="Id_clanarine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racun_Korisnik_Korisnici">
+          <End Role="Korisnici" Type="Self.Korisnici" Multiplicity="1" />
+          <End Role="Racun_Korisnik" Type="Self.Racun_Korisnik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racun_Korisnik">
+              <PropertyRef Name="Id_Korisnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racun_Proizvodi_Proizvodi">
+          <End Role="Proizvodi" Type="Self.Proizvodi" Multiplicity="1" />
+          <End Role="Racun_Proizvodi" Type="Self.Racun_Proizvodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proizvodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racun_Proizvodi">
+              <PropertyRef Name="Id_proizvoda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racun_Proizvodi_Racuni">
+          <End Role="Racuni" Type="Self.Racuni" Multiplicity="1" />
+          <End Role="Racun_Proizvodi" Type="Self.Racun_Proizvodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Racuni">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racun_Proizvodi">
+              <PropertyRef Name="Id_racuna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeretanaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clanarine" EntityType="Self.Clanarine" />
+          <EntitySet Name="Korisnici" EntityType="Self.Korisnici" />
+          <EntitySet Name="Proizvodi" EntityType="Self.Proizvodi" />
+          <EntitySet Name="Racun_Korisnik" EntityType="Self.Racun_Korisnik" />
+          <EntitySet Name="Racun_Proizvodi" EntityType="Self.Racun_Proizvodi" />
+          <EntitySet Name="Racuni" EntityType="Self.Racuni" />
+          <AssociationSet Name="FK_Korisnici_Clanarine" Association="Self.FK_Korisnici_Clanarine">
+            <End Role="Clanarine" EntitySet="Clanarine" />
+            <End Role="Korisnici" EntitySet="Korisnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Korisnik_Korisnici" Association="Self.FK_Racun_Korisnik_Korisnici">
+            <End Role="Korisnici" EntitySet="Korisnici" />
+            <End Role="Racun_Korisnik" EntitySet="Racun_Korisnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Proizvodi_Proizvodi" Association="Self.FK_Racun_Proizvodi_Proizvodi">
+            <End Role="Proizvodi" EntitySet="Proizvodi" />
+            <End Role="Racun_Proizvodi" EntitySet="Racun_Proizvodi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Proizvodi_Racuni" Association="Self.FK_Racun_Proizvodi_Racuni">
+            <End Role="Racuni" EntitySet="Racuni" />
+            <End Role="Racun_Proizvodi" EntitySet="Racun_Proizvodi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeretanaModelStoreContainer" CdmEntityContainer="TeretanaEntities">
+          <EntitySetMapping Name="Clanarine">
+            <EntityTypeMapping TypeName="TeretanaModel.Clanarine">
+              <MappingFragment StoreEntitySet="Clanarine">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ime_clanarine" ColumnName="Ime_clanarine" />
+                <ScalarProperty Name="Cjena" ColumnName="Cjena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korisnici">
+            <EntityTypeMapping TypeName="TeretanaModel.Korisnici">
+              <MappingFragment StoreEntitySet="Korisnici">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ime_Prezime" ColumnName="Ime_Prezime" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Mobitel" ColumnName="Mobitel" />
+                <ScalarProperty Name="Datum_upisa" ColumnName="Datum_upisa" />
+                <ScalarProperty Name="Id_clanarine" ColumnName="Id_clanarine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proizvodi">
+            <EntityTypeMapping TypeName="TeretanaModel.Proizvodi">
+              <MappingFragment StoreEntitySet="Proizvodi">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ime_Proizvoda" ColumnName="Ime_Proizvoda" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Cjena" ColumnName="Cjena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Racun_Korisnik">
+            <EntityTypeMapping TypeName="TeretanaModel.Racun_Korisnik">
+              <MappingFragment StoreEntitySet="Racun_Korisnik">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Korisnika" ColumnName="Id_Korisnika" />
+                <ScalarProperty Name="Datum_izdavanja" ColumnName="Datum_izdavanja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Racun_Proizvodi">
+            <EntityTypeMapping TypeName="TeretanaModel.Racun_Proizvodi">
+              <MappingFragment StoreEntitySet="Racun_Proizvodi">
+                <ScalarProperty Name="Id_racuna" ColumnName="Id_racuna" />
+                <ScalarProperty Name="Id_proizvoda" ColumnName="Id_proizvoda" />
+                <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Racuni">
+            <EntityTypeMapping TypeName="TeretanaModel.Racuni">
+              <MappingFragment StoreEntitySet="Racuni">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Datum_izdavanja" ColumnName="Datum_izdavanja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
